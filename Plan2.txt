@@ -1,0 +1,103 @@
+Build a **Student Data Management System** in **PHP with MySQL** that is lightweight and compatible with InfinityFree hosting.
+
+---
+
+### Landing Page
+
+* Use **Bootstrap via CDN** for responsive layout.
+* Full-screen **background image** of the school campus (`/assets/img/background.jpg`).
+* **Header (top bar):**
+
+  * Left: school seal (`/assets/img/school_seal.png`).
+  * Right: municipality/place seal (`/assets/img/place_seal.png`).
+  * Center:
+
+    * School name (large bold text).
+    * School address (small text under the name).
+* Center of page:
+
+  * Welcome message.
+  * Buttons: **Login** (teachers) and **Register** (teachers).
+
+---
+
+### Teacher Registration & Login
+
+* **Registration form fields:**
+
+  * Teacher ID (unique)
+  * Full Name
+  * Grade levels handled (multi-select dropdown, stored as comma-separated string)
+  * Upload avatar (max 1MB, stored in `/uploads/`)
+  * Password (hashed using `password_hash`)
+* **Login form:** Teacher ID + password.
+* After login, teacher must **select one grade level** to manage.
+* To switch grade level, teacher must logout and log back in.
+
+---
+
+### Parent Access (Future Feature)
+
+* Simple login with **student ID only**.
+* Parents can view their child’s:
+
+  * Attendance
+  * Quiz results
+  * Achievements
+
+---
+
+### Teacher Dashboard (After Login)
+
+Sidebar menu with:
+
+1. **Class Record**
+
+   * List of all students in the selected grade.
+   * Show total **Present / Absent** count (real-time using PHP refresh or AJAX).
+   * Allow marking attendance.
+
+2. **Quiz Record**
+
+   * List of students.
+   * Click a student → view quiz records.
+   * Teacher can add new quizzes (subject + date).
+   * Enter/update student scores.
+
+3. **Achievements**
+
+   * Show students with achievement badges.
+   * Click a student → view detailed achievements.
+   * Teacher can add achievements (title + description).
+
+---
+
+### System Notes
+
+* Use **plain PHP + MySQLi** (no heavy frameworks for InfinityFree).
+* Use `config.php` for DB connection and `setup.php` for database initialization.
+* Use Bootstrap (CDN) for UI.
+* Store uploaded images in `/uploads/` and save only file paths in DB.
+* Optimize for InfinityFree limitations:
+
+  * Avoid large files or heavy libraries.
+  * Keep database schema minimal.
+
+---
+
+### Database Tables (Minimum)
+
+* `teachers` (id, teacher\_id, fullname, grade\_levels, avatar, password)
+* `students` (id, student\_id, fullname, grade\_level)
+* `attendance` (id, student\_id, date, status)
+* `quizzes` (id, title, subject, date, grade\_level)
+* `quiz_scores` (id, student\_id, quiz\_id, score)
+* `achievements` (id, student\_id, title, description, date)
+
+---
+
+### Future Expansion
+
+* Add **REST API endpoints** for Android app integration.
+* Generate **PDF/Excel reports** for attendance, quizzes, and achievements.
+* Add **parent notifications** (email or mobile app push).
